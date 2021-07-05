@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/styles.css">
 
     <title>Ristorante Con Fusion</title>
 </head>
@@ -32,7 +32,7 @@
                     <li class="nav-item"><a class="nav-link" href="./contactus.html"><span class="fa fa-address-card fa-lg"></span>Contact</a></li>
                 </ul>
                 <span class="navbar-text">
-                    <a data-toggle="modal" data-target="#loginModal" >
+                    <a id="loginButton" data-toggle="modal" data-target="#loginModal" role="button">
                         <span class="fa fa-sign-in"></span> Login
                     </a>
                 </span>
@@ -77,6 +77,8 @@
         </div>
     </div>
 
+
+    <!-- for reservation -->
     <div id="reservation-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg" role="content">
             <div class="modal-content">
@@ -113,12 +115,12 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group row align-item-center">
-                                <label class="col-12 col-sm-5 col-form-label" >Section</label>
-                                <div class="col-12 col-sm-4">
-                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="button" autocomplete="off">Non-smoking</button>
-                                </div>
-                                <div class="col-12 col-sm-3">
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="button" autocomplete="off">Smoking</button>
+                                <label class="col-12 col-sm-2 col-form-label" >Section</label>
+                                <div class="col-12 col-sm " style="margin-left: 68px;">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="button" autocomplete="off">Non-smoking</button>
+                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="button" autocomplete="off">Smoking</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +168,7 @@
                 </div>
                 <div class="col-12 col-sm align-self-center">
                     <span data-toggle="modal" data-target="#reservation-modal">
-                        <a type="button" class="btn btn-warning btn-sm btn-block" role="button"   data-toggle="tooltip" data-html="true" title="Or Call us at <br>
+                        <a id="reservationButton" type="button" class="btn btn-warning btn-sm btn-block" role="button"   data-toggle="tooltip" data-html="true" title="Or Call us at <br>
                             <strong>+852 12345678</strong>"  data-placement="bottom">Rerserve Table</a>
                     </span>
                 </div>
@@ -390,6 +392,12 @@
             }
             
         });
+        $('#reservationButton').click(function(){
+            $('#reservation-modal').modal('show');
+        })
+        $('#loginButton').click(function(){
+            $('#loginModal').modal('show');
+        })
     });
 
 </script>

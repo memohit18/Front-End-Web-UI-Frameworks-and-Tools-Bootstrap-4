@@ -1,21 +1,18 @@
 'use strict';
 
-module.exports = function(grunt){
-
-    const sass = require('node-sass');
-
+module.exports = function (grunt) {
+    // Time how long tasks take. Can help when optimizing build times
     require('time-grunt')(grunt);
 
+    // Automatically load required Grunt tasks
     require('jit-grunt')(grunt, {
         useminPrepare: 'grunt-usemin'
     });
 
+    // Define the configuration for all the tasks
+    
     grunt.initConfig({
         sass: {
-            options: {
-                implementation: sass,
-                sourceMap:true
-            },
             dist: {
                 files: {
                     'css/styles.css': 'css/styles.scss'
@@ -26,35 +23,22 @@ module.exports = function(grunt){
             files: 'css/*.scss',
             tasks: ['sass']
         },
-        browserSync: {
-            dev: {
-                bsFiles: {
-                    src: [
-                        'css/*.css',
-                        '*.html',
-                        '*js/*.js'
-                    ]
-                },
-                options: {
-                    watchTask: true,
-                    server: {
-                        baseDir: './'
-                    }
-                }
-            }
-        },
         copy: {
             html: {
-                files: [{
+                files: [
+                {
+                    //for html
                     expand: true,
                     dot: true,
                     cwd: './',
                     src: ['*.html'],
                     dest: 'dist'
-                }]
+                }]                
             },
             fonts: {
-                files: [{
+                files: [
+                {
+                    //for font-awesome
                     expand: true,
                     dot: true,
                     cwd: 'node_modules/font-awesome',
@@ -65,7 +49,24 @@ module.exports = function(grunt){
         },
         clean: {
             build: {
-                src: ['dist/']
+                src: [ 'dist/']
+            }
+        },
+        browserSync: {
+            dev: {
+                bsFiles: {
+                    src : [
+                        'css/*.css',
+                        '*.html',
+                        'js/*.js'
+                    ]
+                },
+                options: {
+                    watchTask: true,
+                    server: {
+                        baseDir: "./"
+                    }
+                }
             }
         },
         imagemin: {
@@ -78,7 +79,6 @@ module.exports = function(grunt){
                 }]
             }
         },
-        
 
         useminPrepare: {
             foo: {
@@ -100,6 +100,15 @@ module.exports = function(grunt){
                                     keepSpecialComments: 0, rebase: false
                                 };
                             }       
+                        }],
+                        js: [{
+                            name: 'uglify',
+                            createConfig: function (context, block) {
+                            var generated = context.options.generated;
+                                generated.options = {
+                                    keepSpecialComments: 0, rebase: false
+                                };
+                            } 
                         }]
                     }
                 }
@@ -155,23 +164,10 @@ module.exports = function(grunt){
             options: {
                 assetsDirs: ['dist', 'dist/css','dist/js']
             }
-        },
-
-        htmlmin: {                                         // Task
-            dist: {                                        // Target
-                options: {                                 // Target options
-                    collapseWhitespace: true
-                },
-                files: {                                   // Dictionary of files
-                    'dist/index.html': 'dist/index.html',  // 'destination': 'source'
-                    'dist/contactus.html': 'dist/contactus.html',
-                    'dist/aboutus.html': 'dist/aboutus.html',
-                }
-            }
         }
     });
 
-    grunt.registerTask('css',['sass']);
+    grunt.registerTask('css', ['sass']);
     grunt.registerTask('default', ['browserSync', 'watch']);
     grunt.registerTask('build', [
         'clean',
@@ -182,7 +178,6 @@ module.exports = function(grunt){
         'cssmin',
         'uglify',
         'filerev',
-        'usemin',
-        'htmlmin'
+        'usemin'
     ]);
 };
